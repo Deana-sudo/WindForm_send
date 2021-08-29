@@ -1,0 +1,10 @@
+G:\Projects\WinformSocket\Winform_sendFile\Winform_sendFile\bin\Release\Winform_sendFile.exe.config
+G:\Projects\WinformSocket\Winform_sendFile\Winform_sendFile\bin\Release\Winform_sendFile.exe
+G:\Projects\WinformSocket\Winform_sendFile\Winform_sendFile\bin\Release\Winform_sendFile.pdb
+G:\Projects\WinformSocket\Winform_sendFile\Winform_sendFile\obj\Release\Winform_sendFile.csprojAssemblyReference.cache
+G:\Projects\WinformSocket\Winform_sendFile\Winform_sendFile\obj\Release\Winform_sendFile.ServerWin.resources
+G:\Projects\WinformSocket\Winform_sendFile\Winform_sendFile\obj\Release\Winform_sendFile.Properties.Resources.resources
+G:\Projects\WinformSocket\Winform_sendFile\Winform_sendFile\obj\Release\Winform_sendFile.csproj.GenerateResource.cache
+G:\Projects\WinformSocket\Winform_sendFile\Winform_sendFile\obj\Release\Winform_sendFile.csproj.CoreCompileInputs.cache
+G:\Projects\WinformSocket\Winform_sendFile\Winform_sendFile\obj\Release\Winform_sendFile.exe
+G:\Projects\WinformSocket\Winform_sendFile\Winform_sendFile\obj\Release\Winform_sendFile.pdb

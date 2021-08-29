@@ -1,0 +1,9 @@
+G:\Projects\WinformSocket\Winform_sendFile\Winform_receiveFile\bin\Release\Winform_receiveFile.exe.config
+G:\Projects\WinformSocket\Winform_sendFile\Winform_receiveFile\bin\Release\Winform_receiveFile.exe
+G:\Projects\WinformSocket\Winform_sendFile\Winform_receiveFile\bin\Release\Winform_receiveFile.pdb
+G:\Projects\WinformSocket\Winform_sendFile\Winform_receiveFile\obj\Release\Winform_receiveFile.Socket_Client.resources
+G:\Projects\WinformSocket\Winform_sendFile\Winform_receiveFile\obj\Release\Winform_receiveFile.Properties.Resources.resources
+G:\Projects\WinformSocket\Winform_sendFile\Winform_receiveFile\obj\Release\Winform_receiveFile.csproj.GenerateResource.cache
+G:\Projects\WinformSocket\Winform_sendFile\Winform_receiveFile\obj\Release\Winform_receiveFile.csproj.CoreCompileInputs.cache
+G:\Projects\WinformSocket\Winform_sendFile\Winform_receiveFile\obj\Release\Winform_receiveFile.exe
+G:\Projects\WinformSocket\Winform_sendFile\Winform_receiveFile\obj\Release\Winform_receiveFile.pdb
