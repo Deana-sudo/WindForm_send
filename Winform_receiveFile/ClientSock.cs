@@ -11,42 +11,18 @@ using System.Threading;
 
 namespace Winform_receiveFile
 {
-
-    public class DataObj
-    {
-        Socket ActualSocket = null;
-        public int bufferSize = 0;
-        public byte[] buffer;
-
-
-        public DataObj(int bufferSize)
-        {
-            this.buffer = new byte[bufferSize];
-        }
-    }
     class ClientSock
     {
-        //public byte[] recvBuffer = new byte[4096];
-        //private byte[] recvBuffer;
-        //private string FileName = "Downloaded_File.png";
-        //BinaryWriter writer = null;
-        // string selected = "";
+        //const int BUFFER_SIZE_VALUE = 1024;
 
-
-
-        public ClientSock(String IP, int port)
+        public ClientSock(string IP, int port, string path)
         {
-         //   Socket socket;
-             
-          //  byte[] recvBuffer = new byte[4096];
-        //    Socket Client;
             IPEndPoint ep;
-            byte[] recvBuffer;
-            byte[] receivedBufferSize = new byte[1024];
             int bufferSize;
-            byte[] fileNameSizeBuffer = new byte[4];
-            byte[] fileNameSize;
-            string fileName;
+            int fileNameSize;
+            string fileNameString;
+            byte[] fileBuffer;
+            BinaryWriter writer = null;
 
 
             Socket Client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
@@ -55,106 +31,74 @@ namespace Winform_receiveFile
 
                 Client.BeginConnect(ep, ConnectCallBack, Client);
 
-                //Client.BeginConnect(ep, ConnectCallBack, 0);
-
-            //Client.BeginConnect(ep,ConnectCallBack,0);
 
             void ConnectCallBack(IAsyncResult ar)
             {
-                Socket temp = (Socket)ar.AsyncState;
-
-                //temp.EndConnect(ar);
-                //socket = temp;
-                MessageBox.Show("Connected to : " + temp.RemoteEndPoint.ToString());
-
-                temp.Receive(receivedBufferSize);
-                bufferSize = BitConverter.ToInt32(receivedBufferSize,0);
-                recvBuffer = new byte[bufferSize];
-
-                temp.Receive(fileNameSizeBuffer);
-                int size = BitConverter.ToInt32(fileNameSizeBuffer, 0);
+                try
+                {
+                    Socket sock = (Socket)ar.AsyncState;
 
 
-                fileNameSize = new byte[size];
-                temp.Receive(fileNameSize);
-                fileName = Encoding.Default.GetString(fileNameSize);
+                    // 파일 사이즈 수신
+                    fileBuffer = new byte[32];
+                    sock.Receive(fileBuffer);
+                    bufferSize = BitConverter.ToInt32(fileBuffer, 0);
+                    //MessageBox.Show("파일 크기 : " + bufferSize);
+
+                    //파일 이름 사이즈 수신
+                    fileBuffer = new byte[32];
+                    sock.Receive(fileBuffer);
+                    fileNameSize = BitConverter.ToInt32(fileBuffer, 0);
+                    //MessageBox.Show("파일 이름 크기(Client) : " + fileNameSize);
 
 
-                temp.BeginReceive(recvBuffer, 0, recvBuffer.Length, SocketFlags.None, ReceiveCallBack, temp);
+                    //파일 이름 수신
+                    fileBuffer = new byte[fileNameSize];
+                    sock.BeginReceive(fileBuffer, 0, fileBuffer.Length, SocketFlags.None, ReceiveCallBack, sock);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Error : " + e.Message);
+                }
+
 
             }
             void ReceiveCallBack(IAsyncResult ar)
             {
+                Socket sock = ar.AsyncState as Socket;
+                fileNameString = Encoding.Default.GetString(fileBuffer);
 
-                Socket transferSock = ar.AsyncState as Socket;
+                int total = 0;
 
-                MessageBox.Show("starting Receive : " + transferSock.RemoteEndPoint.ToString());
-                FileSaver.fileSave(recvBuffer,fileName);
-                MessageBox.Show("Save Completed. Shutting Donw");
-                
+                string dirName = path + fileNameString; // dirName = C:\example\example.abc
+                FileStream fileStream = new FileStream(dirName, FileMode.Create); // -> 멈춤
+                writer = new BinaryWriter(fileStream);
 
-                //MessageBox.Show(BitConverter.ToString(recvBuffer));
+                // 프로그래스 바 윈도우 폼 시작
+                // 쓰레드 / 백그라운드 워커 사용 여부 ---- ???
+                //frm.Show();
 
-
-
-                transferSock.EndReceive(ar);
-
-                transferSock.Close();
-
-
-                //Socket sock = (Socket)ar.AsyncState;
-
-                //byte[] buffer = new byte[4];
-                //sock.Receive(buffer);       //파일 크기를 받는다.
-                //int fileLength = BitConverter.ToInt32(buffer, 0);
-
-                //// 파일 이름 사이즈
-                //buffer = new byte[4];
-                //sock.Receive(buffer);       //파일 이름의 크기를 받는다.
-                //int fileNameLength = BitConverter.ToInt32(buffer, 0);
-
-                //// 파일 이름
-                //buffer = new byte[fileNameLength];
-                //sock.Receive(buffer);       //파일 이름을 받는다.
-                //string fileName = Encoding.Default.GetString(buffer);
-                ////MessageBox.Show("  [2] 파일이름 " + fileName);
-
-                //// 파일
-                //buffer = new byte[1024];
-                //int totalLength = 0;
-                ////파일이름 = 디렉토리 + 파일이름
-
-                //string dirName = Path + "\\" + fileName;        //위에서 선택한 경로에 파일이름을 붙힘
-                //FileStream fileStream = new FileStream(
-                //    dirName, FileMode.Create, FileAccess.Write);        //파일 생성모드
-
-                //writer = new BinaryWriter(fileStream);
-
-                //while (totalLength < fileLength)        //전체 파일을 받는다.
-                //{
-                //    int receiveLength = sock.Receive(buffer);
-
-                //    writer.Write(buffer, 0, receiveLength);
-
-                //    totalLength += receiveLength;
-                //}
+                //ProgressBytesMaxValue = bufferSize; // 파일 크기 지정
+                //ProgressBytesValue = total;
 
 
-                //int strLength = sock.EndReceive(ar);
-            }
 
+                while (total < bufferSize)
+                {
+                    int receiveLength = sock.Receive(fileBuffer); 
 
-            //void ByteToStream(byte[] File)
-            //{
-            //    MemoryStream stream = new MemoryStream();
+                    writer.Write(fileBuffer, 0, receiveLength);
 
-            //    stream.Write(File, 0, File.Length);
+                    total += receiveLength;
+ 
+                    // 스레드 혹은 백그라운드워커 사용해서 얼마나 읽었는지 Progreebar 윈폼에 값 전달
+                }
+                writer.Close();
+                fileStream.Close();
+                sock.Close();
 
-
-            //    return ;
-            //}
+                MessageBox.Show("다운로드 완료 ");
+            }   
         }
-        
-
     }
 }

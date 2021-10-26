@@ -13,10 +13,9 @@ namespace Winform_receiveFile
 {
     public partial class Socket_Client : Form
     {
-
         private String ipForConnect;
         private int port;
-
+        string path = "";
         public Socket_Client()
         {
             InitializeComponent();
@@ -26,23 +25,29 @@ namespace Winform_receiveFile
             ipForConnect = IpEnter.Text;
             port = Int32.Parse(PortEnter.Text);
 
-            ClientSock Starting = new ClientSock(ipForConnect, port);
+            using (var dialog = new FolderBrowserDialog())      //어디다 저장할지 저장위치를 검색할 수 있게한다.
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    path = dialog.SelectedPath;
+                    MessageBox.Show("아니" + path);
+                }
+            }
+
+            ClientSock Starting = new ClientSock(ipForConnect, port, path);
 
             //FilePathSelector StartingNow = new FilePathSelector(ipForConnect,port);
 
             //fileSave(Starting.recvBuffer); 
         }
-
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
-
         private void IpEnter_TextChanged(object sender, EventArgs e)
         {
 

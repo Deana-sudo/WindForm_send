@@ -8,3 +8,4 @@ G:\Projects\WinformSocket\Winform_sendFile\Winform_receiveFile\obj\Debug\Winform
 G:\Projects\WinformSocket\Winform_sendFile\Winform_receiveFile\obj\Debug\Winform_receiveFile.exe
 G:\Projects\WinformSocket\Winform_sendFile\Winform_receiveFile\obj\Debug\Winform_receiveFile.pdb
 G:\Projects\WinformSocket\Winform_sendFile\Winform_receiveFile\obj\Debug\Winform_receiveFile.Socket_Client.resources
+G:\Projects\WinformSocket\Winform_sendFile\Winform_receiveFile\obj\Debug\Winform_receiveFile.ProgressBAR.resources

@@ -13,12 +13,14 @@ namespace Winform_receiveFile
         public static void fileSave(byte[] recvBuffer, string filename)
         {
             string[] token = filename.Split('.');
+            string NAME = token == null ? "TRUE" : "TempFileName";
             string file_extension = token[token.Count() -1]; //구분 필요함
 
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
             if (file_extension != null)
             {
                 saveFileDialog1.Filter = "*.BMP;*.JPG;*.GIF;*.JPEG;|*.BMP;*.JPG;*.GIF;*.JPEG;|*.AVI;*.MP4;*.MKV|*.AVI;*.MP4;*.MKV;|*.Zip;|*.Zip;| All files (*.*)|*.*";
+            // 끝나고 필터값 구분할것 
             }
             else 
             {
